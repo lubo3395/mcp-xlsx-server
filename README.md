@@ -28,7 +28,59 @@ npx mcp-xlsx-server
 
 ## 配置
 
-在 Claude Code 或其他 MCP 客户端中配置：
+### 在 Claude Code 中
+
+编辑 `claude.json`，使用 `mcpServers` 字段：
+
+```json
+{
+  "mcpServers": {
+    "xlsx": {
+      "command": "npx",
+      "args": ["mcp-xlsx-server"]
+    }
+  }
+}
+```
+
+### 在 VS Code (GitHub Copilot) 中
+
+编辑 `.vscode/mcp.json` 或全局 `mcp.json`，使用 **`servers`** 字段（不是 `mcpServers`）：
+
+```json
+{
+  "servers": {
+    "xlsx": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["mcp-xlsx-server"]
+    }
+  }
+}
+```
+
+文件位置：
+- **工作区级别**: `.vscode/mcp.json`
+- **全局**: `%APPDATA%\Code\User\mcp.json`
+
+### 在 Cline / Roo Code (VS Code 扩展) 中
+
+编辑 `cline.json` 或 `mcp.json`，使用 `mcpServers` 字段：
+
+```json
+{
+  "mcpServers": {
+    "xlsx": {
+      "command": "npx",
+      "args": ["-y", "mcp-xlsx-server"]
+    }
+  }
+}
+```
+
+### 在 Cursor 中
+
+编辑 `.cursor/mcp.json`，使用 `mcpServers` 字段：
 
 ```json
 {
