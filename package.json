@@ -4,6 +4,9 @@
   "description": "MCP server for Excel file read/write operations using SheetJS (xlsx)",
   "type": "module",
   "main": "dist/index.js",
+  "bin": {
+    "mcp-xlsx-server": "dist/index.js"
+  },
   "files": [
     "dist/"
   ],
