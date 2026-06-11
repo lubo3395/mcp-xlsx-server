@@ -1,6 +1,6 @@
 {
   "name": "mcp-xlsx-server",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "MCP server for Excel file read/write operations using SheetJS (xlsx)",
   "type": "module",
   "main": "dist/index.js",
