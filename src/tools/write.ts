@@ -119,6 +119,8 @@ export async function handleUpdateCells(
 
   // 验证并更新单元格
   const cellRefRegex = /^[A-Za-z]+[1-9]\d*$/;
+  let currentRange = ws["!ref"] ? XLSX.utils.decode_range(ws["!ref"]) : null;
+
   for (const cellRef of Object.keys(cells)) {
     if (!cellRefRegex.test(cellRef)) {
       throw new Error(
@@ -144,8 +146,22 @@ export async function handleUpdateCells(
     }
 
     ws[cellRef] = cell;
+
+    // 更新 !ref 范围以包含新写入的单元格
+    const addr = XLSX.utils.decode_cell(cellRef);
+    if (currentRange) {
+      currentRange.s.r = Math.min(currentRange.s.r, addr.r);
+      currentRange.s.c = Math.min(currentRange.s.c, addr.c);
+      currentRange.e.r = Math.max(currentRange.e.r, addr.r);
+      currentRange.e.c = Math.max(currentRange.e.c, addr.c);
+    } else {
+      currentRange = { s: { r: addr.r, c: addr.c }, e: { r: addr.r, c: addr.c } };
+    }
   }
 
+  if (currentRange) {
+    ws["!ref"] = XLSX.utils.encode_range(currentRange);
+  }
   XLSX.writeFile(wb, resolvedPath);
 
   return {
